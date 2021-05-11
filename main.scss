@@ -1,0 +1,75 @@
+*{
+  padding:0;
+  margin:0;
+  background-color: #bbbfca;
+}
+
+@font-face {
+  font-family: 'retro';
+  src: url('Retro_Gaming.ttf');
+  font-stye: normal;
+  font-weight: 100;
+}
+
+
+body{
+  font-family: retro;
+  font-size:40px;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: 2fr;
+  grid-template-columns: 30% 70%;
+
+  grid-text-emphasis:
+  'score'
+  'game';
+
+  #scoreboard{
+    grid-area: score;
+    text-align: center;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+
+  }
+
+  #gamebox{
+    grid-area: game;
+    width: 400px;
+    height: 500px;
+    border: 1px solid #495464;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+
+
+
+#ball{
+  width: 20px;
+  height: 20px;
+  background-color: #ef233c;
+  border-radius:50%;
+  position: relative;
+  top: 400px;
+  left: 200px;
+  z-index: 10000;
+}
+
+.platform{
+  width: 400px;
+  height: 20px;
+  background-color: #495464;
+  position: relative;
+  top:100px;
+  margin-top:-20px
+}
+
+.gap{
+  width: 30px;
+  height: 20px;
+  background-color: #bbbfca;
+  position: relative;
+  top: 100px;
+  margin-top:-20px;
+}
