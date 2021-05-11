@@ -1,23 +1,26 @@
 
 
-
 let drop_my_balls = (function(){
-
     let body = document.getElementsByTagName('body')[0]
     let interval
     let both = 0
     let score = 0
     let score_actual = score-9
-    let platform_spacing = 100
     let platform_current = []
+    let ball_speed = 2
+    let interval_speed = 1
+    const platform_speed_start = 0.5
+    let platform_speed = platform_speed_start
+    let welcome_message = 'Welcome to Drop my Balls!'
+
+
+    let platform_spacing = 100
 
     function load_game(){
 
-
-
         let scoreboard = document.createElement('div')
         scoreboard.setAttribute('id','scoreboard')
-        let score_text = document.createTextNode(`Welcome to Drop my Balls!\n Score: ${score_actual}`)
+        let score_text = document.createTextNode(`${welcome_message}\n Score: ${score_actual}`)
         scoreboard.appendChild(score_text)
         body.appendChild(scoreboard)
 
@@ -35,14 +38,14 @@ let drop_my_balls = (function(){
         function move_ball_left(){
             let left = parseInt(window.getComputedStyle(ball).getPropertyValue('left'))
             if (left>0){
-                ball.style.left = left-1+'px'
+                ball.style.left = left-ball_speed +'px'
             }
 
         }
         function move_ball_right(){
             let left = parseInt(window.getComputedStyle(ball).getPropertyValue('left'))
             if (left<380){
-                ball.style.left = left+1+'px'
+                ball.style.left = left+ball_speed +'px'
             }
 
         }
@@ -65,6 +68,8 @@ let drop_my_balls = (function(){
 
         let game = setInterval(function(){
 
+
+
             //get reference to the previous platform/block so as to make even spacing
             let prev_platform = document.getElementById(`platform_${score-1}`)
             if (score>0){
@@ -72,7 +77,8 @@ let drop_my_balls = (function(){
             }
 
             //generate the platforms and gaps
-            if (prev_platform_top<400 || score == 0){
+            if (prev_platform_top<385 || score == 0){
+
                 //generate platform
                 let platform = document.createElement('div')
                 platform.setAttribute('class','platform')
@@ -81,25 +87,47 @@ let drop_my_balls = (function(){
                 gamebox.appendChild(platform)
 
                 //generate gaps
-                let gap = document.createElement('div')
-                gap.setAttribute('class','gap')
-                gap.setAttribute('id',`gap_${score}`)
-                gap.style.top = prev_platform_top+platform_spacing+'px'
-                let random = Math.floor(Math.random() * 360)
-                gap.style.left = random + 'px'
-                gamebox.appendChild(gap)
+                let gap1 = document.createElement('div')
+                gap1.setAttribute('class','gap')
+                gap1.setAttribute('id',`gap1_${score}`)
+                gap1.style.top = prev_platform_top+platform_spacing+'px'
+                random = Math.floor(Math.random() * 360)
+                gap1.style.left = random + 'px'
+                gamebox.appendChild(gap1)
+
+                let gap2 = document.createElement('div')
+                gap2.setAttribute('class','gap')
+                gap2.setAttribute('id',`gap2_${score}`)
+                gap2.style.top = prev_platform_top+platform_spacing+'px'
+                let if_gap2_random = Math.round(Math.random())
+                if (!if_gap2_random){
+                    random = Math.floor(Math.random() * 360)
+                }
+                gap2.style.left = random + 'px'
+                gamebox.appendChild(gap2)
+
+                let gap3 = document.createElement('div')
+                gap3.setAttribute('class','gap')
+                gap3.setAttribute('id',`gap3_${score}`)
+                gap3.style.top = prev_platform_top+platform_spacing+'px'
+                let if_gap3_random = Math.round(Math.random())
+                if (!if_gap3_random){
+                    random = Math.floor(Math.random() * 360)
+                }
+                gap3.style.left = random + 'px'
+                gamebox.appendChild(gap3)
+
+
 
                 platform_current.push(score)
                 score++
                 score_actual++
-                console.log(score)
-                console.log(score_actual)
-                if(score_actual<0){
-                    scoreboard.innerHTML=`Welcome to Drop my Balls!\nScore: 0`
-                }else{
-                    scoreboard.innerHTML=`Welcome to Drop my Balls!\nScore: ${score_actual}`
-                }
 
+                if(score_actual<0){
+                    scoreboard.innerHTML=`${welcome_message}\nScore: 0`
+                }else{
+                    scoreboard.innerHTML=`${welcome_message}\nScore: ${score_actual}`
+                }
             }
 
             //get the platforms and gaps to move
@@ -108,32 +136,64 @@ let drop_my_balls = (function(){
             var ball_move_down = 0
 
 
+            // speed up
+            if (score_actual==10) {
+                platform_speed=platform_speed_start*1.1
+                body.setAttribute('class','background_10')
+            } else if (score_actual==20){
+                platform_speed=platform_speed_start*1.2
+                body.setAttribute('class','background_20')
+            } else if (score_actual==30){
+                platform_speed=platform_speed_start*1.3
+                body.setAttribute('class','background_30')
+            }else if (score_actual==40){
+                platform_speed=platform_speed_start*1.4
+                body.setAttribute('class','background_40')
+            }else if (score_actual==50){
+                platform_speed=platform_speed_start*1.5
+                body.setAttribute('class','background_50')
+            }else if (score_actual==60) {
+                platform_speed = platform_speed_start * 1.5
+                body.setAttribute('class', 'none')
+            }
             //game over condition
-            // if(ball_top <= 0){
-            //     alert('Game Over! Score: '+ (score-9))
-            //     clearInterval(game)
-            //     location.reload()
-            // }
+            if(ball_top <= 0){
+                alert('Game Over! Score: '+ (score-9))
+                clearInterval(game)
+                location.reload()
+            }
 
             for (let i = 0; i <platform_current.length ; i++) {
                 let platform = document.getElementById(`platform_${platform_current[i]}`)
-                let gap = document.getElementById(`gap_${platform_current[i]}`)
                 let platform_top = parseFloat(window.getComputedStyle(platform).getPropertyValue("top"))
-                let gap_left = parseFloat(window.getComputedStyle(gap).getPropertyValue("left"))
-                platform.style.top = platform_top - 0.5 + 'px'
-                gap.style.top = platform_top - 0.5 + 'px'
+                platform.style.top = platform_top - platform_speed + 'px'
+
+
+                let gap1 = document.getElementById(`gap1_${platform_current[i]}`)
+                let gap1_left = parseFloat(window.getComputedStyle(gap1).getPropertyValue("left"))
+                gap1.style.top = platform_top - platform_speed + 'px'
+
+                let gap2 = document.getElementById(`gap2_${platform_current[i]}`)
+                let gap2_left = parseFloat(window.getComputedStyle(gap2).getPropertyValue("left"))
+                gap2.style.top = platform_top - platform_speed + 'px'
+
+                let gap3 = document.getElementById(`gap3_${platform_current[i]}`)
+                let gap3_left = parseFloat(window.getComputedStyle(gap3).getPropertyValue("left"))
+                gap3.style.top = platform_top - platform_speed + 'px'
+
 
                 // remove blocks if out of gamebox
                 if (platform_top < -4){
                     platform_current.shift()
                     platform.remove()
-                    gap.remove()
+                    gap1.remove()
+                    gap2.remove()
                 }
 
                 //how ball interacts with platform
                 if (platform_top-20<ball_top && platform_top>ball_top){
                     ball_move_down++
-                    if(gap_left<=ball_left && gap_left+20>=ball_left){
+                    if((gap1_left<=ball_left && gap1_left+20>=ball_left) || (gap2_left<=ball_left && gap2_left+20>=ball_left) || (gap3_left<=ball_left && gap3_left+20>=ball_left) ){
                         ball_move_down=0
                     }
                 } //check if ball is touching platform or gap
@@ -144,10 +204,11 @@ let drop_my_balls = (function(){
                     ball.style.top = ball_top+2+'px'
                 }
             } else{
-                ball.style.top = ball_top-0.5+'px'
+                ball.style.top = ball_top-platform_speed+'px'
             }
-        },5);
+        },interval_speed);
     }
+
 
     return{
         init:function(){
@@ -155,79 +216,10 @@ let drop_my_balls = (function(){
         }
     }
 })()
-
 drop_my_balls.init()
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-// multiple gaps
-// let blocks = setInterval(function(){
-//
-//     //get reference to the previous platform/block so as to make even spacing
-//     let prev_platform = document.getElementById(`platform_${score-1}`)
-//     let prev_gap = document.getElementsByName(`gap_${score-1}`)[0]
-//     if (score>0){
-//         var prev_platform_top = parseInt(window.getComputedStyle(prev_platform).getPropertyValue('top'))
-//         var prev_gap_top = parseInt(window.getComputedStyle(prev_gap).getPropertyValue('top'))
-//     }
-//
-//     if (prev_platform_top<400 || score == 0){
-//         //generate platform
-//         let platform = document.createElement('div')
-//         platform.setAttribute('class','platform')
-//         platform.setAttribute('id',`platform_${score}`)
-//         platform.style.top = prev_platform_top+platform_spacing+'px'
-//         gamebox.appendChild(platform)
-//
-//
-//         //generate gaps
-//         let gap_list = {}
-//         for (let i = 0; i < Math.floor(Math.random() * 2) + 1  ; i++) {
-//             let gap = document.createElement('div')
-//             gap.setAttribute('class','gap')
-//             gap.setAttribute('name',`gap_${score}`)
-//             gap.setAttribute('id',`gap_${score}_${i}`)
-//             let random = Math.floor(Math.random() * 360)
-//             gap.style.left = random + 'px'
-//             gap.style.top = prev_gap_top+platform_spacing+'px'
-//             gap_list[`gap${i}`] = `gap_${score}_${i}`
-//
-//             gamebox.appendChild(gap)
-//         }
-//
-//
-//         platform_current.push(gap_list)
-//
-//         score++
-//     }
-//     // im stuck here please help......
-//     for (var j = 0; j < platform_current.length; j++) {
-//         let current = platform_current[j]
-//         let iblock = document.getElementById(`platform_${j}`)
-//         let iblockTop = parseFloat(window.getComputedStyle(iblock).getPropertyValue('top'))
-//         iblock.style.top = iblockTop-0.5+'px'
-//         for (i in platform_current){
-//             for (x in platform_current[i]){
-//                 let igap = document.getElementById(platform_current[i][x])
-//                 let igapTop = parseFloat(window.getComputedStyle(igap).getPropertyValue('top'))
-//                 igap.style.top = igapTop-0.5+'px'
-//             }
-//             // platform_current.shift()
-//         }
-//     }
-//
-// },1000);
 
 
 

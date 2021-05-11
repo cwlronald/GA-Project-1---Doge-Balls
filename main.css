@@ -1,7 +1,7 @@
 * {
   padding: 0;
   margin: 0;
-  background-color: #bbbfca;
+  background-color: #838B8A;
 }
 
 @font-face {
@@ -16,6 +16,7 @@ body {
   grid-template-columns: repeat(1, 1fr);
   grid-template-rows: 2fr;
   grid-template-columns: 30% 70%;
+  height: 100%;
   grid-text-emphasis: "score" "game";
 }
 body #scoreboard {
@@ -29,15 +30,38 @@ body #gamebox {
   grid-area: game;
   width: 400px;
   height: 500px;
-  border: 1px solid #495464;
+  border: 5px solid black;
   margin-left: auto;
   margin-right: auto;
+}
+
+.background_10 {
+  background: url("doge_icon.png");
+}
+
+.background_20 {
+  background: url("background_20.gif");
+}
+
+.background_30 {
+  background: url("background_30.gif");
+}
+
+.background_40 {
+  background: url("background_40.gif");
+}
+
+.background_50 {
+  background: url("background_50.gif");
 }
 
 #ball {
   width: 20px;
   height: 20px;
-  background-color: #ef233c;
+  background: url("doge_icon.png");
+  background-size: cover;
+  background-color: #e1b303;
+  border: 3px solid #e1b303;
   border-radius: 50%;
   position: relative;
   top: 400px;
@@ -48,16 +72,16 @@ body #gamebox {
 .platform {
   width: 400px;
   height: 20px;
-  background-color: #495464;
+  background-color: #393e46;
   position: relative;
   top: 100px;
   margin-top: -20px;
 }
 
 .gap {
-  width: 30px;
+  width: 40px;
   height: 20px;
-  background-color: #bbbfca;
+  background-color: #838B8A;
   position: relative;
   top: 100px;
   margin-top: -20px;
