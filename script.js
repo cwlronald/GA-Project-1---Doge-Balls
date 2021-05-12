@@ -10,21 +10,34 @@ let drop_my_balls = (function(){
     let ball_speed = 2
     let interval_speed = 1
     let platform_speed = 0.5
+    let platform_speed_round = 0
+    let speed_increase = 1.006
+    let welcome_message = 'Welcome to Doge Balls!'
+    let platform_spacing = 100
 
+    //if firefox
     let isFirefox = typeof InstallTrigger !== 'undefined';
     if (isFirefox){
         platform_speed*=4
         ball_speed*=4
     }
 
-    let platform_speed_round = 0
-    let speed_increase = 1.006
-    let welcome_message = 'Welcome to Doge Balls!'
+    function starting_screen(){
+        body.setAttribute('class','background_into')
+        let intro_text = document.createElement('button')
+        intro_text.setAttribute('id','intro_text')
+        intro_text.textContent='PLAY THE BEST GAME EVER NOW!'
+        body.appendChild(intro_text)
+        document.getElementById('intro_text').onclick = function() {
+            intro_text.addEventListener('click',load_game())
+        }
+        body.setAttribute('class','background_intro')
+    }
 
-
-    let platform_spacing = 100
 
     function load_game(){
+
+        document.querySelector('button').remove()
 
         let scoreboard = document.createElement('div')
         scoreboard.setAttribute('id','scoreboard')
@@ -40,9 +53,6 @@ let drop_my_balls = (function(){
         ball.setAttribute('id','ball')
         gamebox.appendChild(ball)
 
-        var rect = ball.getBoundingClientRect()
-        console.log(rect.top, rect.right, rect.bottom, rect.left)
-        console.log('first')
 
         //ball movement
         function move_ball_left(){
@@ -74,6 +84,8 @@ let drop_my_balls = (function(){
             clearInterval(interval)
             both = 0
         })
+
+
 
 
         let game = setInterval(function(){
@@ -127,16 +139,32 @@ let drop_my_balls = (function(){
                 gap3.style.left = random + 'px'
                 gamebox.appendChild(gap3)
 
+
+                //update score + speed
                 platform_current.push(score)
                 score++
                 score_actual++
                 platform_speed*=speed_increase
-
                 if(score_actual<0){
                     scoreboard.innerHTML=`<div>${welcome_message}</div><div>Score: 0</div><div>Speed: ${platform_speed_round}</div>`
                 }else{
                     scoreboard.innerHTML=`<div>${welcome_message}</div><div>Score: ${score_actual}</div><div>Speed: ${platform_speed_round}</div>`
                 }
+                if(score == 100){ball_speed++}
+
+
+                //add audio
+                let audio_track
+                if (score_actual==-4){
+                    audio_track = 'audio/sunrise_soundtrack.mp3'
+                } else if(score_actual==100){
+                    audio_track = 'audio/goldenwind_soundtrack.mp3'
+                }
+                audioObj = new Audio(audio_track)
+                body.appendChild(audioObj)
+                audioObj.play()
+
+
             }
 
             //get the platforms and gaps to move
@@ -168,16 +196,16 @@ let drop_my_balls = (function(){
                 body.setAttribute('class','background_100')
             }
 
-            //game over condition
-            if((ball_top <= 0 || ball_top >=480) && score > -9){
-                if(score_actual<0){
-                    alert(`Game Over! Score: 0`)
-                }else{
-                    alert(`Game Over! Score: ${score_actual}`)
-                }
-                clearInterval(game)
-                location.reload()
-            }
+            // //game over condition
+            // if((ball_top <= 0 || ball_top >=480) && score > -9){
+            //     if(score_actual<0){
+            //         alert(`Game Over! Score: 0`)
+            //     }else{
+            //         alert(`Game Over! Score: ${score_actual}`)
+            //     }
+            //     clearInterval(game)
+            //     location.reload()
+            // }
 
             for (let i = 0; i <platform_current.length ; i++) {
                 let platform = document.getElementById(`platform_${platform_current[i]}`)
@@ -229,7 +257,7 @@ let drop_my_balls = (function(){
 
     return{
         init:function(){
-            load_game()
+            starting_screen()
         }
     }
 })()

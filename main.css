@@ -10,6 +10,20 @@
   font-stye: normal;
   font-weight: 100;
 }
+#intro_text {
+  font-family: retro;
+  font-size: 40px;
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
 body {
   font-family: retro;
   font-size: 40px;
@@ -33,6 +47,10 @@ body #gamebox {
   border: 5px solid black;
   margin-left: auto;
   margin-right: auto;
+}
+
+.background_intro {
+  background: url("images/doge_icon.png");
 }
 
 .background_10 {
