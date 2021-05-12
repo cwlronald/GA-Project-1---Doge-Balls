@@ -10,7 +10,8 @@ let drop_my_balls = (function(){
     let ball_speed = 2
     let interval_speed = 1
     let platform_speed = 0.5
-    let speed_increase = 1.005
+    let platform_speed_round = 0
+    let speed_increase = 1.006
     let welcome_message = 'Welcome to Doge Balls!'
 
 
@@ -20,7 +21,7 @@ let drop_my_balls = (function(){
 
         let scoreboard = document.createElement('div')
         scoreboard.setAttribute('id','scoreboard')
-        let score_text = document.createTextNode(`${welcome_message}\n Score: ${score_actual}`)
+        let score_text = document.createTextNode(`<div>${welcome_message}</div><div>Score: 0</div><div>Speed: ${platform_speed}</div>`)
         scoreboard.appendChild(score_text)
         body.appendChild(scoreboard)
 
@@ -32,6 +33,9 @@ let drop_my_balls = (function(){
         ball.setAttribute('id','ball')
         gamebox.appendChild(ball)
 
+        var rect = ball.getBoundingClientRect()
+        console.log(rect.top, rect.right, rect.bottom, rect.left)
+        console.log('first')
 
         //ball movement
         function move_ball_left(){
@@ -67,6 +71,8 @@ let drop_my_balls = (function(){
 
         let game = setInterval(function(){
 
+            platform_speed_round = parseFloat(platform_speed.toFixed(5))
+
             //get reference to the previous platform/block so as to make even spacing
             let prev_platform = document.getElementById(`platform_${score-1}`)
             if (score>0){
@@ -88,7 +94,7 @@ let drop_my_balls = (function(){
                 gap1.setAttribute('class','gap')
                 gap1.setAttribute('id',`gap1_${score}`)
                 gap1.style.top = prev_platform_top+platform_spacing+'px'
-                random = Math.floor(Math.random() * 360)
+                random = Math.round(Math.random()*360)
                 gap1.style.left = random + 'px'
                 gamebox.appendChild(gap1)
 
@@ -114,20 +120,16 @@ let drop_my_balls = (function(){
                 gap3.style.left = random + 'px'
                 gamebox.appendChild(gap3)
 
-
-
                 platform_current.push(score)
                 score++
                 score_actual++
                 platform_speed*=speed_increase
 
                 if(score_actual<0){
-                    scoreboard.innerHTML=`${welcome_message}\nScore: 0`
+                    scoreboard.innerHTML=`<div>${welcome_message}</div><div>Score: 0</div><div>Speed: ${platform_speed_round}</div>`
                 }else{
-                    scoreboard.innerHTML=`${welcome_message}\nScore: ${score_actual}`
+                    scoreboard.innerHTML=`<div>${welcome_message}</div><div>Score: ${score_actual}</div><div>Speed: ${platform_speed_round}</div>`
                 }
-                console.log(platform_speed)
-                console.log(score_actual)
             }
 
             //get the platforms and gaps to move
@@ -148,15 +150,27 @@ let drop_my_balls = (function(){
             }else if (score_actual==50){
                 body.setAttribute('class','background_50')
             }else if (score_actual==60) {
-                body.setAttribute('class', 'none')
+                body.setAttribute('class','background_60')
+            } else if (score_actual==70){
+                body.setAttribute('class','background_70')
+            } else if (score_actual==80){
+                body.setAttribute('class','background_80')
+            }else if (score_actual==90){
+                body.setAttribute('class','background_90')
+            }else if (score_actual==100){
+                body.setAttribute('class','background_100')
             }
 
             //game over condition
-            if(ball_top <= 0){
-                alert('Game Over! Score: '+ (score-9))
-                clearInterval(game)
-                location.reload()
-            }
+            // if((ball_top <= 0 || ball_top >=480) && score > -9){
+            //     if(score_actual<0){
+            //         alert(`Game Over! Score: 0`)
+            //     }else{
+            //         alert(`Game Over! Score: ${score_actual}`)
+            //     }
+            //     clearInterval(game)
+            //     location.reload()
+            // }
 
             for (let i = 0; i <platform_current.length ; i++) {
                 let platform = document.getElementById(`platform_${platform_current[i]}`)
@@ -183,6 +197,7 @@ let drop_my_balls = (function(){
                     platform.remove()
                     gap1.remove()
                     gap2.remove()
+                    gap3.remove()
                 }
 
                 //how ball interacts with platform
@@ -211,6 +226,8 @@ let drop_my_balls = (function(){
         }
     }
 })()
+
+
 drop_my_balls.init()
 
 

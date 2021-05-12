@@ -36,35 +36,55 @@ body #gamebox {
 }
 
 .background_10 {
-  background: url("doge_icon.png");
+  background: url("images/doge_icon.png");
 }
 
 .background_20 {
-  background: url("background_20.gif");
+  background: url("images/background_20.gif");
 }
 
 .background_30 {
-  background: url("background_30.gif");
+  background: url("images/background_30.gif");
 }
 
 .background_40 {
-  background: url("background_40.gif");
+  background: url("images/background_40.gif");
 }
 
 .background_50 {
-  background: url("background_50.gif");
+  background: url("images/background_50.gif");
+}
+
+.background_60 {
+  background: url("images/background_60.gif");
+}
+
+.background_70 {
+  background: url("images/background_70.gif");
+}
+
+.background_80 {
+  background: url("images/background_80.gif");
+}
+
+.background_90 {
+  background: url("images/background_90.gif");
+}
+
+.background_100 {
+  background: url("images/background_100.gif");
 }
 
 #ball {
   width: 20px;
   height: 20px;
-  background: url("doge_icon.png");
+  background: url("images/doge_icon.png");
   background-size: cover;
   background-color: #e1b303;
   border: 3px solid #e1b303;
   border-radius: 50%;
   position: relative;
-  top: 400px;
+  top: 200px;
   left: 200px;
   z-index: 10000;
 }
