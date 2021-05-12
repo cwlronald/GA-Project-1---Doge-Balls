@@ -10,6 +10,13 @@ let drop_my_balls = (function(){
     let ball_speed = 2
     let interval_speed = 1
     let platform_speed = 0.5
+
+    let isFirefox = typeof InstallTrigger !== 'undefined';
+    if (isFirefox){
+        platform_speed*=4
+        ball_speed*=4
+    }
+
     let platform_speed_round = 0
     let speed_increase = 1.006
     let welcome_message = 'Welcome to Doge Balls!'
@@ -138,7 +145,7 @@ let drop_my_balls = (function(){
             var ball_move_down = 0
 
 
-            // speed up
+            // change background
             if (score_actual==10) {
                 body.setAttribute('class','background_10')
             } else if (score_actual==20){
@@ -162,15 +169,15 @@ let drop_my_balls = (function(){
             }
 
             //game over condition
-            // if((ball_top <= 0 || ball_top >=480) && score > -9){
-            //     if(score_actual<0){
-            //         alert(`Game Over! Score: 0`)
-            //     }else{
-            //         alert(`Game Over! Score: ${score_actual}`)
-            //     }
-            //     clearInterval(game)
-            //     location.reload()
-            // }
+            if((ball_top <= 0 || ball_top >=480) && score > -9){
+                if(score_actual<0){
+                    alert(`Game Over! Score: 0`)
+                }else{
+                    alert(`Game Over! Score: ${score_actual}`)
+                }
+                clearInterval(game)
+                location.reload()
+            }
 
             for (let i = 0; i <platform_current.length ; i++) {
                 let platform = document.getElementById(`platform_${platform_current[i]}`)
@@ -211,7 +218,7 @@ let drop_my_balls = (function(){
 
             if (ball_move_down==0){
                 if(ball_top< 480){
-                    ball.style.top = ball_top+2+'px'
+                    ball.style.top = ball_top+ball_speed+'px'
                 }
             } else{
                 ball.style.top = ball_top-platform_speed+'px'
