@@ -9,9 +9,9 @@ let drop_my_balls = (function(){
     let platform_current = []
     let ball_speed = 2
     let interval_speed = 1
-    const platform_speed_start = 0.5
-    let platform_speed = platform_speed_start
-    let welcome_message = 'Welcome to Drop my Balls!'
+    let platform_speed = 0.5
+    let speed_increase = 1.005
+    let welcome_message = 'Welcome to Doge Balls!'
 
 
     let platform_spacing = 100
@@ -23,7 +23,6 @@ let drop_my_balls = (function(){
         let score_text = document.createTextNode(`${welcome_message}\n Score: ${score_actual}`)
         scoreboard.appendChild(score_text)
         body.appendChild(scoreboard)
-
 
         let gamebox = document.createElement('div')
         gamebox.setAttribute('id','gamebox')
@@ -67,8 +66,6 @@ let drop_my_balls = (function(){
 
 
         let game = setInterval(function(){
-
-
 
             //get reference to the previous platform/block so as to make even spacing
             let prev_platform = document.getElementById(`platform_${score-1}`)
@@ -122,12 +119,15 @@ let drop_my_balls = (function(){
                 platform_current.push(score)
                 score++
                 score_actual++
+                platform_speed*=speed_increase
 
                 if(score_actual<0){
                     scoreboard.innerHTML=`${welcome_message}\nScore: 0`
                 }else{
                     scoreboard.innerHTML=`${welcome_message}\nScore: ${score_actual}`
                 }
+                console.log(platform_speed)
+                console.log(score_actual)
             }
 
             //get the platforms and gaps to move
@@ -138,24 +138,19 @@ let drop_my_balls = (function(){
 
             // speed up
             if (score_actual==10) {
-                platform_speed=platform_speed_start*1.1
                 body.setAttribute('class','background_10')
             } else if (score_actual==20){
-                platform_speed=platform_speed_start*1.2
                 body.setAttribute('class','background_20')
             } else if (score_actual==30){
-                platform_speed=platform_speed_start*1.3
                 body.setAttribute('class','background_30')
             }else if (score_actual==40){
-                platform_speed=platform_speed_start*1.4
                 body.setAttribute('class','background_40')
             }else if (score_actual==50){
-                platform_speed=platform_speed_start*1.5
                 body.setAttribute('class','background_50')
             }else if (score_actual==60) {
-                platform_speed = platform_speed_start * 1.5
                 body.setAttribute('class', 'none')
             }
+
             //game over condition
             if(ball_top <= 0){
                 alert('Game Over! Score: '+ (score-9))
