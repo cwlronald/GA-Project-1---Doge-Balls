@@ -1,6 +1,9 @@
 # Doge Balls
 
 ## Introduction
+
+Link to game: https://pages.git.generalassemb.ly/ronald/project_1/
+
 Welcome to Doge Balls, the first coding project I have ever done on Javascript! This was something that I never thought I would be able to do before the course started, but alas, here we are. People who know me, know I'm an all or nothing type of person. Hence, when deciding what game to create for the project, I decided to go all in on the nothing side of the spectrum. That does not mean I will create a poorly coded game, but rather I will create a simple game that is highly polished. 
 
 After doing some googling for old school arcade games, this game felt like the kind of game I would mindlessly play while waiting for something else. Hence, I decided to work on it and added a splash of my personality into it.
