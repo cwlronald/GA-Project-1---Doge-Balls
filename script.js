@@ -48,7 +48,6 @@ let doge_balls = (function(){
         }
     }
 
-
     function load_game(){
 
         document.querySelector('div').remove()
