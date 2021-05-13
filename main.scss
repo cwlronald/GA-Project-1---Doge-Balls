@@ -1,15 +1,24 @@
-*{
-  padding:0;
-  margin:0;
+html,
+body {
+  margin: 0px;
+  height:100%;
   background-color: #838B8A;
 }
-
 
 @font-face {
   font-family: 'retro';
   src: url('Retro_Gaming.ttf');
   font-stye: normal;
   font-weight: 100;
+}
+
+#intro_box{
+  margin: 0px;
+  height:100%;
+  background-image: url('images/2657590-middle.png');
+  background-repeat: no-repeat;
+  background-position:50% 20%;
+
 }
 
 #intro_text{
@@ -24,10 +33,16 @@
   padding-right: 50px;
   padding-top: 50px;
   padding-bottom: 50px;
+  background-color: #838B8A;
 }
 
+.intro_text2{
+  font-family: retro;
+  font-size:20px;
+  text-align: center;
+}
 
-body {
+#scoreboard_gamebox {
   font-family: retro;
   font-size:40px;
   grid-template-columns: repeat(1, 1fr);
@@ -46,7 +61,7 @@ body {
     width: 400px;
     margin-left: auto;
     margin-right: auto;
-
+    background-color: #838B8A;
   }
 
   #gamebox{
@@ -56,13 +71,9 @@ body {
     border: 5px solid black;
     margin-left: auto;
     margin-right: auto;
+    background-color: #838B8A;
 
   }
-}
-
-
-.background_intro{
-  background: url('images/doge_icon.png');
 }
 
 .background_10{
@@ -73,36 +84,16 @@ body {
   background: url('images/background_20.gif');
 }
 
-.background_30{
-  background: url('images/background_30.gif');
-}
-
 .background_40{
   background: url('images/background_40.gif');
-}
-
-.background_50{
-  background: url('images/background_50.gif');
 }
 
 .background_60{
   background: url('images/background_60.gif');
 }
 
-.background_70{
-  background: url('images/background_70.gif');
-}
-
-.background_80{
-  background: url('images/background_80.gif');
-}
-
-.background_90{
-  background: url('images/background_90.gif');
-}
-
-.background_100{
-  background: url('images/background_100.gif');
+.background_dio{
+  background: url('images/background_dio.gif');
 }
 
 #ball{

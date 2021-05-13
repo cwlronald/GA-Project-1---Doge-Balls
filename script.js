@@ -1,6 +1,6 @@
 
 
-let drop_my_balls = (function(){
+let doge_balls = (function(){
     let body = document.getElementsByTagName('body')[0]
     let interval
     let both = 0
@@ -11,9 +11,10 @@ let drop_my_balls = (function(){
     let interval_speed = 1
     let platform_speed = 0.5
     let platform_speed_round = 0
-    let speed_increase = 1.006
+    let speed_increase = 1.005
     let welcome_message = 'Welcome to Doge Balls!'
     let platform_spacing = 100
+    let itwasidio = 80
 
     //if firefox
     let isFirefox = typeof InstallTrigger !== 'undefined';
@@ -23,38 +24,55 @@ let drop_my_balls = (function(){
     }
 
     function starting_screen(){
-        body.setAttribute('class','background_into')
+        let intro_box = document.createElement('div')
+        intro_box.setAttribute('id','intro_box')
+        body.appendChild(intro_box)
+
         let intro_text = document.createElement('button')
         intro_text.setAttribute('id','intro_text')
         intro_text.textContent='PLAY THE BEST GAME EVER NOW!'
-        body.appendChild(intro_text)
+        intro_box.appendChild(intro_text)
+
+        let intro_text2 = document.createElement('div')
+        intro_text2.setAttribute('class','intro_text2')
+        intro_text2.textContent='Works best on Google Chrome'
+        intro_text.appendChild(intro_text2)
+
+        let intro_text2_1 = document.createElement('div')
+        intro_text2_1.setAttribute('class','intro_text2')
+        intro_text2_1.textContent='Buggy on firefox, and dont even try mobile.'
+        intro_text.appendChild(intro_text2_1)
+
         document.getElementById('intro_text').onclick = function() {
             intro_text.addEventListener('click',load_game())
         }
-        body.setAttribute('class','background_intro')
     }
 
 
     function load_game(){
 
-        document.querySelector('button').remove()
+        document.querySelector('div').remove()
+
+        let scoreboard_gamebox = document.createElement('div')
+        scoreboard_gamebox.setAttribute('id','scoreboard_gamebox')
+        body.appendChild(scoreboard_gamebox)
 
         let scoreboard = document.createElement('div')
         scoreboard.setAttribute('id','scoreboard')
         let score_text = document.createTextNode(`<div>${welcome_message}</div><div>Score: 0</div><div>Speed: ${platform_speed}</div>`)
         scoreboard.appendChild(score_text)
-        body.appendChild(scoreboard)
+        scoreboard_gamebox.appendChild(scoreboard)
 
         let gamebox = document.createElement('div')
         gamebox.setAttribute('id','gamebox')
-        body.appendChild(gamebox)
+        scoreboard_gamebox.appendChild(gamebox)
 
         let ball = document.createElement('div')
         ball.setAttribute('id','ball')
         gamebox.appendChild(ball)
 
 
-        //ball movement
+        //ball movement interval basically makes sure that when you hold down, the ball will keep going
         function move_ball_left(){
             let left = parseInt(window.getComputedStyle(ball).getPropertyValue('left'))
             if (left>0){
@@ -84,8 +102,6 @@ let drop_my_balls = (function(){
             clearInterval(interval)
             both = 0
         })
-
-
 
 
         let game = setInterval(function(){
@@ -150,18 +166,21 @@ let drop_my_balls = (function(){
                 }else{
                     scoreboard.innerHTML=`<div>${welcome_message}</div><div>Score: ${score_actual}</div><div>Speed: ${platform_speed_round}</div>`
                 }
-                if(score == 100){ball_speed++}
+                if(score_actual == itwasidio){
+                    ball_speed*=2
+                    console.log('ball speed boost')
+                }
 
 
                 //add audio
                 let audio_track
                 if (score_actual==-4){
                     audio_track = 'audio/sunrise_soundtrack.mp3'
-                } else if(score_actual==100){
+                } else if(score_actual==itwasidio){
                     audio_track = 'audio/goldenwind_soundtrack.mp3'
                 }
                 audioObj = new Audio(audio_track)
-                body.appendChild(audioObj)
+                scoreboard_gamebox.appendChild(audioObj)
                 audioObj.play()
 
 
@@ -175,37 +194,27 @@ let drop_my_balls = (function(){
 
             // change background
             if (score_actual==10) {
-                body.setAttribute('class','background_10')
+                scoreboard_gamebox.setAttribute('class','background_10')
             } else if (score_actual==20){
-                body.setAttribute('class','background_20')
-            } else if (score_actual==30){
-                body.setAttribute('class','background_30')
+                scoreboard_gamebox.setAttribute('class','background_20')
             }else if (score_actual==40){
-                body.setAttribute('class','background_40')
-            }else if (score_actual==50){
-                body.setAttribute('class','background_50')
+                scoreboard_gamebox.setAttribute('class','background_40')
             }else if (score_actual==60) {
-                body.setAttribute('class','background_60')
-            } else if (score_actual==70){
-                body.setAttribute('class','background_70')
-            } else if (score_actual==80){
-                body.setAttribute('class','background_80')
-            }else if (score_actual==90){
-                body.setAttribute('class','background_90')
-            }else if (score_actual==100){
-                body.setAttribute('class','background_100')
+                scoreboard_gamebox.setAttribute('class','background_60')
+            } else if (score_actual==itwasidio){
+                scoreboard_gamebox.setAttribute('class','background_dio')
             }
 
-            // //game over condition
-            // if((ball_top <= 0 || ball_top >=480) && score > -9){
-            //     if(score_actual<0){
-            //         alert(`Game Over! Score: 0`)
-            //     }else{
-            //         alert(`Game Over! Score: ${score_actual}`)
-            //     }
-            //     clearInterval(game)
-            //     location.reload()
-            // }
+            //game over condition
+            if((ball_top <= 0 || ball_top >=480) && score > -9){
+                if(score_actual<0){
+                    alert(`Game Over! Score: 0`)
+                }else{
+                    alert(`Game Over! Score: ${score_actual}`)
+                }
+                clearInterval(game)
+                location.reload()
+            }
 
             for (let i = 0; i <platform_current.length ; i++) {
                 let platform = document.getElementById(`platform_${platform_current[i]}`)
@@ -254,7 +263,6 @@ let drop_my_balls = (function(){
         },interval_speed);
     }
 
-
     return{
         init:function(){
             starting_screen()
@@ -263,7 +271,7 @@ let drop_my_balls = (function(){
 })()
 
 
-drop_my_balls.init()
+doge_balls.init()
 
 
 
