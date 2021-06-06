@@ -243,13 +243,13 @@ let doge_balls = (function(){
                     gap3.remove()
                 }
 
-                //how ball interacts with platform
+                //check if ball is touching platform or gap
                 if (platform_top-20<ball_top && platform_top>ball_top){
                     ball_move_down++
                     if((gap1_left<=ball_left && gap1_left+20>=ball_left) || (gap2_left<=ball_left && gap2_left+20>=ball_left) || (gap3_left<=ball_left && gap3_left+20>=ball_left) ){
                         ball_move_down=0
                     }
-                } //check if ball is touching platform or gap
+                }
             }
 
             if (ball_move_down==0){
@@ -259,6 +259,7 @@ let doge_balls = (function(){
             } else{
                 ball.style.top = ball_top-platform_speed+'px'
             }
+
         },interval_speed);
     }
 
